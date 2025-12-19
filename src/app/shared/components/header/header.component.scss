@@ -1,0 +1,135 @@
+.app-header {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+
+  .container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .logo {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    
+    img {
+      height: 40px;
+    }
+  }
+
+  .search-bar {
+    flex: 1;
+    display: flex;
+    gap: 0.5rem;
+
+    input {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .btn-search {
+      padding: 0.5rem 1rem;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .btn-cart {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+
+      .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #dc3545;
+        color: #fff;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 0.75rem;
+      }
+    }
+
+    .btn-login {
+      padding: 0.5rem 1.5rem;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .user-menu {
+      position: relative;
+
+      .btn-user {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        .user-avatar {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: #007bff;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+        }
+      }
+
+      .user-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        display: none;
+
+        button {
+          display: block;
+          width: 100%;
+          padding: 0.75rem 1.5rem;
+          cursor: pointer;
+          background: none;
+          border: none;
+          text-align: left;
+          
+          &:hover {
+            background: #f8f9fa;
+          }
+        }
+      }
+
+      &:hover .user-dropdown {
+        display: block;
+      }
+    }
+  }
+}

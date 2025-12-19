@@ -1,0 +1,61 @@
+<footer class="app-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Company -->
+      <div class="footer-section">
+        <h4>Empresa</h4>
+        <ul>
+          @for (link of footerLinks.company; track link.route) {
+            <li>
+              <a [routerLink]="link.route">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="footer-section">
+        <h4>Suporte</h4>
+        <ul>
+          @for (link of footerLinks.support; track link.route) {
+            <li>
+              <a [routerLink]="link.route">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- For Pharmacies -->
+      <div class="footer-section">
+        <h4>Para Farmácias</h4>
+        <ul>
+          @for (link of footerLinks.pharmacy; track link.route) {
+            <li>
+              <a [routerLink]="link.route">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Social -->
+      <div class="footer-section">
+        <h4>Redes Sociais</h4>
+        <div class="social-links">
+          @for (social of socialLinks; track social.url) {
+            <a [href]="social.url" target="_blank" rel="noopener" [title]="social.name">
+              {{ social.icon }}
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} MedicaMenta.me. Todos os direitos reservados.</p>
+      <p class="disclaimer">
+        <strong>Aviso:</strong> Medicamentos requerem prescrição médica. 
+        Consulte sempre um profissional de saúde.
+      </p>
+    </div>
+  </div>
+</footer>

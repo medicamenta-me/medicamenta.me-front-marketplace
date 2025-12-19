@@ -1,0 +1,50 @@
+<div class="product-card" [routerLink]="['/products', product.id]">
+  <!-- Image -->
+  <div class="product-image">
+    <img [src]="mainImage" [alt]="product.name" />
+    
+    @if (product.requiresPrescription) {
+      <span class="badge-prescription">📋 Receita</span>
+    }
+    
+    @if (isLowStock) {
+      <span class="badge-low-stock">⚠️ Últimas unidades</span>
+    }
+  </div>
+
+  <!-- Content -->
+  <div class="product-content">
+    <h3 class="product-name">{{ product.name }}</h3>
+    
+    <p class="product-description">
+      {{ product.description }}
+    </p>
+
+    <!-- Rating -->
+    @if (product.rating && product.reviewCount) {
+      <div class="product-rating">
+        <div class="stars">
+          @for (star of ratingStars; track star) {
+            <span [class.filled]="isStarFilled(star)">⭐</span>
+          }
+        </div>
+        <span class="review-count">({{ product.reviewCount }})</span>
+      </div>
+    }
+
+    <!-- Price -->
+    <div class="product-footer">
+      <div class="price">{{ formattedPrice }}</div>
+      
+      @if (isInStock) {
+        <button class="btn-add-cart" (click)="onAddToCart($event)">
+          🛒 Adicionar
+        </button>
+      } @else {
+        <button class="btn-out-of-stock" disabled>
+          Indisponível
+        </button>
+      }
+    </div>
+  </div>
+</div>
