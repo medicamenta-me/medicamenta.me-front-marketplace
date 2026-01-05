@@ -1,0 +1,73 @@
+<mat-card class="product-card" [class.list-view]="viewMode === 'list'" (click)="onProductClick()">
+  <!-- Imagem -->
+  <div class="product-image-container">
+    <img mat-card-image [src]="getPrimaryImage()" [alt]="product.name" />
+    
+    <!-- Badges -->
+    <div class="badges">
+      @if (product.discount && product.discount > 0) {
+        <span class="badge discount-badge">-{{ product.discount }}%</span>
+      }
+      @if (product.requiresPrescription) {
+        <mat-chip class="prescription-chip">Receita</mat-chip>
+      }
+      @if (!isInStock()) {
+        <span class="badge out-of-stock-badge">Sem Estoque</span>
+      }
+    </div>
+  </div>
+
+  <!-- Conteúdo -->
+  <mat-card-content>
+    <h3 class="product-name">{{ product.name }}</h3>
+    <p class="product-description">{{ product.description }}</p>
+
+    <!-- Rating -->
+    <div class="rating">
+      @for (star of getRatingStars(); track $index) {
+        <mat-icon [class.filled]="star.filled">
+          {{ star.filled ? 'star' : 'star_border' }}
+        </mat-icon>
+      }
+      <span class="rating-count">({{ product.reviewCount }})</span>
+    </div>
+
+    <!-- Preço -->
+    <div class="price-container">
+      @if (getDiscountedPrice()) {
+        <span class="price original-price">{{ formatPrice(product.price) }}</span>
+        <span class="price discounted-price">{{ formatPrice(getDiscountedPrice()!) }}</span>
+      } @else {
+        <span class="price">{{ formatPrice(product.price) }}</span>
+      }
+    </div>
+
+    <!-- Informações Adicionais (apenas em list view) -->
+    @if (viewMode === 'list') {
+      <div class="additional-info">
+        <div class="info-item">
+          <mat-icon>inventory_2</mat-icon>
+          <span>{{ product.stock }} em estoque</span>
+        </div>
+        <div class="info-item">
+          <mat-icon>local_shipping</mat-icon>
+          <span>Entrega rápida</span>
+        </div>
+      </div>
+    }
+  </mat-card-content>
+
+  <!-- Ações -->
+  <mat-card-actions>
+    @if (isInStock()) {
+      <button mat-raised-button color="primary" (click)="onProductClick(); $event.stopPropagation()">
+        <mat-icon>shopping_cart</mat-icon>
+        Adicionar
+      </button>
+    } @else {
+      <button mat-raised-button [disabled]="true">
+        Indisponível
+      </button>
+    }
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,160 @@
+<div class="product-list-container">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Produtos</h1>
+      
+      <div class="header-actions">
+        <button mat-icon-button (click)="showFilters.set(!showFilters())" aria-label="Abrir filtros" [matBadge]="hasActiveFilters() ? Object.keys(activeFilters()).length : 0" matBadgeColor="warn">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+        <button mat-icon-button (click)="toggleViewMode()" aria-label="Alternar visualização">
+          <mat-icon>{{ viewMode() === 'grid' ? 'view_list' : 'view_module' }}</mat-icon>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Barra de Busca -->
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar medicamentos...</mat-label>
+      <input matInput [value]="searchQuery()" (input)="onSearchChange($event)" placeholder="Buscar medicamentos..." aria-label="Buscar medicamentos" />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    
+    <!-- Filtros Ativos (Chips) -->
+    @if (hasActiveFilters()) {
+      <div class="active-filters">
+        <mat-chip-set>
+          @if (activeFilters().category) {
+            <mat-chip (removed)="removeFilter('category')">
+              {{ getCategoryLabel(activeFilters().category!) }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          }
+          @if (activeFilters().priceMin) {
+            <mat-chip (removed)="removeFilter('priceMin')">
+              Mín: {{ formatPrice(activeFilters().priceMin!) }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          }
+          @if (activeFilters().priceMax) {
+            <mat-chip (removed)="removeFilter('priceMax')">
+              Máx: {{ formatPrice(activeFilters().priceMax!) }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          }
+          @if (activeFilters().requiresPrescription !== undefined) {
+            <mat-chip (removed)="removeFilter('requiresPrescription')">
+              {{ activeFilters().requiresPrescription ? 'Com Receita' : 'Sem Receita' }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          }
+          @if (activeFilters().inStock) {
+            <mat-chip (removed)="removeFilter('inStock')">
+              Em Estoque
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          }
+        </mat-chip-set>
+        
+        <button mat-button color="warn" (click)="clearFilters()">
+          Limpar Tudo
+        </button>
+      </div>
+    }
+    
+    <!-- Ordenação e Contador -->
+    <div class="toolbar-actions">
+      <mat-form-field appearance="outline">
+        <mat-label>Ordenar por</mat-label>
+        <mat-select [value]="JSON.stringify(sortBy())" (selectionChange)="onSortChange($event.value)">
+          @for (option of sortOptions; track option.label) {
+            <mat-option [value]="JSON.stringify(option.value)">
+              {{ option.label }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      
+      <span class="product-count">
+        {{ filteredProductsCount() }} produto{{ filteredProductsCount() !== 1 ? 's' : '' }}
+      </span>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <mat-sidenav-container>
+    <!-- Painel de Filtros (Lateral) -->
+    <mat-sidenav [opened]="showFilters()" mode="over" position="end">
+      <app-product-filters
+        [currentFilters]="activeFilters()"
+        (filtersApply)="onFiltersApply($event)"
+        (filtersClose)="showFilters.set(false)"
+      ></app-product-filters>
+    </mat-sidenav>
+
+    <!-- Conteúdo -->
+    <mat-sidenav-content>
+      <!-- Loading Inicial -->
+      @if (isLoading() && products().length === 0) {
+        <div class="loading-container">
+          <mat-spinner></mat-spinner>
+          <p>Carregando produtos...</p>
+        </div>
+      }
+      
+      <!-- Lista/Grid de Produtos -->
+      @if (!isLoading() || products().length > 0) {
+        @if (products().length > 0) {
+          <div class="products-container" [class.grid-view]="viewMode() === 'grid'" [class.list-view]="viewMode() === 'list'">
+            @for (product of products(); track product.id) {
+              <app-product-card
+                [product]="product"
+                [viewMode]="viewMode()"
+                (productClick)="goToProductDetail($event)"
+              ></app-product-card>
+            }
+          </div>
+          
+          <!-- Load More Button -->
+          @if (hasMore() && !isLoading()) {
+            <div class="load-more-container">
+              <button mat-raised-button color="primary" (click)="loadMore()">
+                Carregar Mais
+              </button>
+            </div>
+          }
+          
+          <!-- Loading More -->
+          @if (isLoading() && products().length > 0) {
+            <div class="loading-more">
+              <mat-spinner diameter="40"></mat-spinner>
+            </div>
+          }
+        } @else {
+          <!-- Empty State -->
+          <div class="empty-state">
+            <mat-icon>search_off</mat-icon>
+            <h2>Nenhum produto encontrado</h2>
+            <p>Tente ajustar os filtros ou fazer uma nova busca</p>
+            @if (hasActiveFilters()) {
+              <button mat-raised-button color="primary" (click)="clearFilters()">
+                Limpar Filtros
+              </button>
+            }
+          </div>
+        }
+      }
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

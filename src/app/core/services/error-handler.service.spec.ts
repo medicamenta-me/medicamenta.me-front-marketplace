@@ -225,4 +225,252 @@ describe('ErrorHandlerService', () => {
       expect(mockRouter.navigate).not.toHaveBeenCalled();
     });
   });
+
+  describe('✅ Cenários HTTP Adicionais', () => {
+    it('deve processar erro 408 Request Timeout', () => {
+      const error = new HttpErrorResponse({
+        status: 408,
+        statusText: 'Request Timeout'
+      });
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'A requisição demorou muito. Tente novamente.'
+      );
+    });
+
+    it('deve processar erro 409 Conflict', () => {
+      const error = new HttpErrorResponse({
+        status: 409,
+        statusText: 'Conflict'
+      });
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Conflito de dados. O recurso já existe.'
+      );
+    });
+
+    it('deve processar erro HTTP desconhecido com status 418', () => {
+      const error = new HttpErrorResponse({
+        status: 418,
+        statusText: "I'm a teapot"
+      });
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Erro ao processar requisição (418).'
+      );
+    });
+
+    it('deve redirecionar para /error em todos os erros 5xx', () => {
+      const error = new HttpErrorResponse({
+        status: 502,
+        statusText: 'Bad Gateway'
+      });
+
+      service.handleError(error);
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/error'], {
+        queryParams: { message: jasmine.any(String) }
+      });
+    });
+  });
+
+  describe('✅ Cenários Firebase Adicionais', () => {
+    it('deve processar erro auth/wrong-password', () => {
+      const error = {
+        message: 'Wrong password',
+        code: 'auth/wrong-password'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Senha incorreta.'
+      );
+    });
+
+    it('deve processar erro auth/email-already-in-use', () => {
+      const error = {
+        message: 'Email already in use',
+        code: 'auth/email-already-in-use'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Este email já está em uso.'
+      );
+    });
+
+    it('deve processar erro auth/weak-password', () => {
+      const error = {
+        message: 'Weak password',
+        code: 'auth/weak-password'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'A senha deve ter pelo menos 6 caracteres.'
+      );
+    });
+
+    it('deve processar erro auth/invalid-email', () => {
+      const error = {
+        message: 'Invalid email',
+        code: 'auth/invalid-email'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Email inválido.'
+      );
+    });
+
+    it('deve processar erro auth/too-many-requests', () => {
+      const error = {
+        message: 'Too many requests',
+        code: 'auth/too-many-requests'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Muitas tentativas. Tente novamente mais tarde.'
+      );
+    });
+
+    it('deve processar erro not-found', () => {
+      const error = {
+        message: 'Not found',
+        code: 'not-found'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Documento não encontrado.'
+      );
+    });
+
+    it('deve processar erro already-exists', () => {
+      const error = {
+        message: 'Already exists',
+        code: 'already-exists'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Documento já existe.'
+      );
+    });
+
+    it('deve processar erro unauthenticated', () => {
+      const error = {
+        message: 'Unauthenticated',
+        code: 'unauthenticated'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Você precisa estar autenticado.'
+      );
+    });
+
+    it('deve processar erro Firebase desconhecido', () => {
+      const error = {
+        message: 'Unknown Firebase error',
+        code: 'auth/unknown-error'
+      } as any;
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Erro ao processar operação.'
+      );
+    });
+  });
+
+  describe('✅ Cenários de Rede', () => {
+    it('deve processar erro de fetch', () => {
+      const error = new Error('fetch failed');
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Sem conexão com a internet. Verifique sua conexão.'
+      );
+    });
+
+    it('deve processar erro de XMLHttpRequest', () => {
+      const error = new Error('XMLHttpRequest error');
+
+      service.handleError(error);
+
+      expect(console.warn).toHaveBeenCalledWith(
+        '💬 Mensagem ao usuário:',
+        'Sem conexão com a internet. Verifique sua conexão.'
+      );
+    });
+  });
+
+  describe('✅ Cenários de Log', () => {
+    it('deve criar ErrorLog com todas as propriedades', () => {
+      const error = new Error('Test error');
+
+      service.handleError(error);
+
+      // Verifica que console.error foi chamado com o log
+      expect(console.error).toHaveBeenCalledWith('📋 Error Log:', jasmine.objectContaining({
+        message: 'Test error',
+        timestamp: jasmine.any(Date),
+        url: jasmine.any(String),
+        userAgent: jasmine.any(String)
+      }));
+    });
+
+    it('deve incluir stack trace para erros Error', () => {
+      const error = new Error('Test error with stack');
+
+      service.handleError(error);
+
+      expect(console.error).toHaveBeenCalledWith('📋 Error Log:', jasmine.objectContaining({
+        stack: jasmine.any(String)
+      }));
+    });
+
+    it('deve ter stack undefined para HttpErrorResponse', () => {
+      const error = new HttpErrorResponse({
+        status: 400,
+        statusText: 'Bad Request'
+      });
+
+      service.handleError(error);
+
+      expect(console.error).toHaveBeenCalledWith('📋 Error Log:', jasmine.objectContaining({
+        stack: undefined
+      }));
+    });
+  });
 });

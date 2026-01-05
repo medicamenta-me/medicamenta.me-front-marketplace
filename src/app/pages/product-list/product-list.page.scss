@@ -1,0 +1,232 @@
+.product-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+// ===========================
+// HEADER
+// ===========================
+.page-header {
+  background-color: white;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+
+  .search-field {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .toolbar-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    mat-form-field {
+      min-width: 200px;
+    }
+
+    .product-count {
+      color: #666;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+  }
+}
+
+// ===========================
+// ACTIVE FILTERS (CHIPS)
+// ===========================
+.active-filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+
+  mat-chip-set {
+    flex: 1;
+  }
+
+  button {
+    flex-shrink: 0;
+  }
+}
+
+// ===========================
+// SIDENAV CONTAINER
+// ===========================
+mat-sidenav-container {
+  flex: 1;
+  background-color: transparent;
+}
+
+mat-sidenav {
+  width: 300px;
+  padding: 1rem;
+}
+
+mat-sidenav-content {
+  padding: 1.5rem;
+}
+
+// ===========================
+// PRODUCTS GRID/LIST
+// ===========================
+.products-container {
+  &.grid-view {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 960px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1280px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+// ===========================
+// LOADING STATES
+// ===========================
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  gap: 1rem;
+
+  p {
+    color: #666;
+    font-size: 1rem;
+  }
+}
+
+.loading-more {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+// ===========================
+// LOAD MORE BUTTON
+// ===========================
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+// ===========================
+// EMPTY STATE
+// ===========================
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  text-align: center;
+  color: #666;
+
+  mat-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+    color: #999;
+  }
+
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  p {
+    margin: 0 0 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+// ===========================
+// RESPONSIVE ADJUSTMENTS
+// ===========================
+@media (max-width: 639px) {
+  .page-header {
+    padding: 1rem;
+
+    .header-content h1 {
+      font-size: 1.5rem;
+    }
+
+    .toolbar-actions {
+      flex-direction: column;
+      align-items: stretch;
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      .product-count {
+        text-align: center;
+      }
+    }
+  }
+
+  mat-sidenav-content {
+    padding: 1rem;
+  }
+
+  .active-filters {
+    flex-direction: column;
+    align-items: stretch;
+
+    mat-chip-set {
+      order: 1;
+    }
+
+    button {
+      order: 2;
+      align-self: flex-end;
+    }
+  }
+}

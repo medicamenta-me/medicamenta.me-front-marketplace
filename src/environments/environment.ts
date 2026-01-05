@@ -1,27 +1,31 @@
 /**
- * 🌍 Environment Configuration
- * Configuração de ambiente para o Marketplace
+ * 🌍 Environment Configuration - Development
+ * Configuração de ambiente de desenvolvimento para o Marketplace
  */
 
 export const environment = {
   production: false,
   appName: 'Medicamenta.me Marketplace',
   appVersion: '1.0.0',
+  subdomain: 'marketplace',
   
-  // Firebase
+  // API URL (para IntegrationService)
+  apiUrl: 'http://localhost:5001/medicamenta-me/us-central1/api',
+  
+  // Firebase (COMPARTILHADO com todos os subdomínios)
   firebase: {
-    apiKey: 'YOUR_DEV_API_KEY',
-    authDomain: 'medicamenta-me-dev.firebaseapp.com',
-    projectId: 'medicamenta-me-dev',
-    storageBucket: 'medicamenta-me-dev.appspot.com',
-    messagingSenderId: 'YOUR_DEV_MESSAGING_SENDER_ID',
-    appId: 'YOUR_DEV_APP_ID',
-    measurementId: 'YOUR_DEV_MEASUREMENT_ID'
+    apiKey: 'YOUR_FIREBASE_API_KEY',
+    authDomain: 'medicamenta-me.firebaseapp.com',
+    projectId: 'medicamenta-me',
+    storageBucket: 'medicamenta-me.appspot.com',
+    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+    appId: 'YOUR_APP_ID',
+    measurementId: 'YOUR_MEASUREMENT_ID'
   },
   
-  // API URLs
+  // API URLs (Backend Functions)
   api: {
-    baseUrl: 'http://localhost:5001/medicamenta-me-dev/us-central1/api',
+    baseUrl: 'http://localhost:5001/medicamenta-me/us-central1/api',
     timeout: 30000
   },
   

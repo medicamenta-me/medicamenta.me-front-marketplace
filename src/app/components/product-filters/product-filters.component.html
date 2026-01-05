@@ -1,0 +1,110 @@
+<div class="filters-container">
+  <!-- Header -->
+  <div class="filters-header">
+    <h2>Filtros</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Formulário de Filtros -->
+  <form [formGroup]="filtersForm" class="filters-form">
+    
+    <!-- Categoria -->
+    <div class="filter-section">
+      <h3>Categoria</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Selecione uma categoria</mat-label>
+        <mat-select formControlName="category">
+          <mat-option [value]="null">Todas</mat-option>
+          @for (cat of categories; track cat.value) {
+            <mat-option [value]="cat.value">{{ cat.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Faixa de Preço -->
+    <div class="filter-section">
+      <h3>Faixa de Preço</h3>
+      
+      <div class="price-range">
+        <div class="price-inputs">
+          <mat-form-field appearance="outline">
+            <mat-label>Mínimo</mat-label>
+            <input matInput type="number" formControlName="priceMin" min="0" max="500" />
+            <span matPrefix>R$&nbsp;</span>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Máximo</mat-label>
+            <input matInput type="number" formControlName="priceMax" min="0" max="500" />
+            <span matPrefix>R$&nbsp;</span>
+          </mat-form-field>
+        </div>
+
+        <div class="price-slider">
+          <mat-slider min="0" max="500" step="10">
+            <input matSliderStartThumb formControlName="priceMin">
+            <input matSliderEndThumb formControlName="priceMax">
+          </mat-slider>
+          <div class="price-labels">
+            <span>{{ formatPrice(priceMin()) }}</span>
+            <span>{{ formatPrice(priceMax()) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Receita -->
+    <div class="filter-section">
+      <h3>Necessita Receita?</h3>
+      <mat-button-toggle-group formControlName="requiresPrescription">
+        <mat-button-toggle [value]="null">Todos</mat-button-toggle>
+        <mat-button-toggle [value]="true">Sim</mat-button-toggle>
+        <mat-button-toggle [value]="false">Não</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <!-- Disponibilidade -->
+    <div class="filter-section">
+      <h3>Disponibilidade</h3>
+      <mat-slide-toggle formControlName="inStock">
+        Somente em estoque
+      </mat-slide-toggle>
+    </div>
+
+    <!-- Avaliação Mínima -->
+    <div class="filter-section">
+      <h3>Avaliação Mínima</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Selecione a avaliação</mat-label>
+        <mat-select formControlName="rating">
+          <mat-option [value]="null">Todas</mat-option>
+          @for (ratingOpt of ratingOptions; track ratingOpt.value) {
+            <mat-option [value]="ratingOpt.value">
+              <div class="rating-option">
+                @for (star of [1,2,3,4,5]; track star) {
+                  <mat-icon [class.filled]="star <= ratingOpt.value">
+                    {{ star <= ratingOpt.value ? 'star' : 'star_border' }}
+                  </mat-icon>
+                }
+              </div>
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </form>
+
+  <!-- Ações -->
+  <div class="filters-actions">
+    <button mat-stroked-button (click)="clearFilters()">
+      Limpar Tudo
+    </button>
+    <button mat-raised-button color="primary" (click)="applyFilters()">
+      Aplicar Filtros
+    </button>
+  </div>
+</div>

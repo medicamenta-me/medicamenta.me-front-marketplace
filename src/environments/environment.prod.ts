@@ -7,10 +7,14 @@ export const environment = {
   production: true,
   appName: 'Medicamenta.me Marketplace',
   appVersion: '1.0.0',
+  subdomain: 'marketplace',
   
-  // Firebase
+  // API URL (para IntegrationService)
+  apiUrl: 'https://us-central1-medicamenta-me.cloudfunctions.net/api',
+  
+  // Firebase (COMPARTILHADO com todos os subdomínios)
   firebase: {
-    apiKey: 'YOUR_PRODUCTION_API_KEY',
+    apiKey: 'YOUR_FIREBASE_API_KEY',
     authDomain: 'medicamenta-me.firebaseapp.com',
     projectId: 'medicamenta-me',
     storageBucket: 'medicamenta-me.appspot.com',
@@ -19,7 +23,7 @@ export const environment = {
     measurementId: 'YOUR_MEASUREMENT_ID'
   },
   
-  // API URLs
+  // API URLs (Backend Functions)
   api: {
     baseUrl: 'https://us-central1-medicamenta-me.cloudfunctions.net/api',
     timeout: 30000

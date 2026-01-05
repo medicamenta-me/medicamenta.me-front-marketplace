@@ -54,4 +54,73 @@ describe('DistancePipe', () => {
   it('deve formatar zero', () => {
     expect(pipe.transform(0)).toBe('0 m');
   });
+
+  // ============================================
+  // TESTES ADICIONAIS
+  // ============================================
+
+  it('deve formatar exatamente 1000 metros como 1.0 km', () => {
+    expect(pipe.transform(1000)).toBe('1.0 km');
+  });
+
+  it('deve formatar 999 metros como metros', () => {
+    expect(pipe.transform(999)).toBe('999 m');
+  });
+
+  it('deve formatar 1001 metros como km', () => {
+    expect(pipe.transform(1001)).toBe('1.0 km');
+  });
+
+  it('deve formatar distância muito grande', () => {
+    expect(pipe.transform(100000)).toBe('100.0 km');
+  });
+
+  it('deve formatar distância muito pequena', () => {
+    expect(pipe.transform(1)).toBe('1 m');
+  });
+
+  it('deve usar 0 decimais para km', () => {
+    expect(pipe.transform(5000, 0)).toBe('5 km');
+  });
+
+  it('deve usar 3 decimais para km', () => {
+    expect(pipe.transform(1234.5678, 3)).toBe('1.235 km');
+  });
+
+  it('deve arredondar metros para baixo (< 0.5)', () => {
+    expect(pipe.transform(100.3)).toBe('100 m');
+  });
+
+  it('deve arredondar metros para cima (>= 0.5)', () => {
+    expect(pipe.transform(100.5)).toBe('101 m');
+  });
+
+  it('deve formatar 1.5 km', () => {
+    expect(pipe.transform(1500)).toBe('1.5 km');
+  });
+
+  it('deve formatar 10.0 km', () => {
+    expect(pipe.transform(10000)).toBe('10.0 km');
+  });
+
+  it('deve formatar valor decimal em metros', () => {
+    expect(pipe.transform(500.9)).toBe('501 m');
+  });
+
+  it('deve formatar valor negativo', () => {
+    expect(pipe.transform(-500)).toBe('-500 m');
+  });
+
+  it('deve formatar valor negativo em km', () => {
+    // Valores negativos são tratados literalmente pela lógica do pipe
+    // -5000 < 1000 é true, então exibe em metros
+    expect(pipe.transform(-5000)).toBe('-5000 m');
+  });
+
+  it('deve manter consistência com diferentes decimals', () => {
+    const result1 = pipe.transform(5000, 1);
+    const result2 = pipe.transform(5000, 2);
+    expect(result1).toBe('5.0 km');
+    expect(result2).toBe('5.00 km');
+  });
 });

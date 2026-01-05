@@ -1,0 +1,73 @@
+{
+  "categories": [
+    {
+      "id": "ANALGESICS",
+      "label": "Analgésicos",
+      "count": 45
+    },
+    {
+      "id": "ANTIBIOTICS",
+      "label": "Antibióticos",
+      "count": 32
+    },
+    {
+      "id": "ANTIHYPERTENSIVES",
+      "label": "Anti-hipertensivos",
+      "count": 28
+    },
+    {
+      "id": "ANTIDIABETICS",
+      "label": "Antidiabéticos",
+      "count": 15
+    },
+    {
+      "id": "VITAMINS",
+      "label": "Vitaminas",
+      "count": 67
+    }
+  ],
+  "priceRanges": [
+    {
+      "label": "Até R$ 20",
+      "min": 0,
+      "max": 2000
+    },
+    {
+      "label": "R$ 20 a R$ 50",
+      "min": 2000,
+      "max": 5000
+    },
+    {
+      "label": "R$ 50 a R$ 100",
+      "min": 5000,
+      "max": 10000
+    },
+    {
+      "label": "Acima de R$ 100",
+      "min": 10000,
+      "max": 999999
+    }
+  ],
+  "sortOptions": [
+    {
+      "value": "relevance",
+      "label": "Relevância"
+    },
+    {
+      "value": "price_asc",
+      "label": "Menor preço"
+    },
+    {
+      "value": "price_desc",
+      "label": "Maior preço"
+    },
+    {
+      "value": "rating_desc",
+      "label": "Melhor avaliação"
+    },
+    {
+      "value": "name_asc",
+      "label": "Nome A-Z"
+    }
+  ]
+}

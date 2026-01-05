@@ -8,6 +8,8 @@ export interface Order {
   orderNumber: string;              // Número único do pedido (ex: "ORD-2025-001234")
   userId: string;
   pharmacyId: string;
+  pharmacyName?: string;            // Nome da farmácia para exibição
+  customerEmail?: string;           // Email do cliente para confirmação
   items: OrderItem[];
   
   // Valores
@@ -27,6 +29,8 @@ export interface Order {
   paymentStatus: PaymentStatus;
   paidAt?: Date;
   paymentDetails?: any;             // Detalhes específicos do método
+  pixCode?: string;                 // Código PIX para pagamento
+  boletoUrl?: string;               // URL do boleto para pagamento
   
   // Receita (se necessário)
   prescriptionRequired: boolean;

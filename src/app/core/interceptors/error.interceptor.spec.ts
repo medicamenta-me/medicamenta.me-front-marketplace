@@ -116,4 +116,40 @@ describe('errorInterceptor', () => {
     const req = httpMock.expectOne('/api/test');
     req.flush({}, { status: 418, statusText: "I'm a teapot" });
   });
+
+  it('deve tratar erro 409 (Conflict)', (done) => {
+    httpClient.get('/api/test').subscribe({
+      error: (error) => {
+        expect(error.message).toBe('Conflito: recurso já existe');
+        done();
+      }
+    });
+
+    const req = httpMock.expectOne('/api/test');
+    req.flush({}, { status: 409, statusText: 'Conflict' });
+  });
+
+  it('deve tratar erro 422 (Unprocessable Entity)', (done) => {
+    httpClient.get('/api/test').subscribe({
+      error: (error) => {
+        expect(error.message).toBe('Dados inválidos');
+        done();
+      }
+    });
+
+    const req = httpMock.expectOne('/api/test');
+    req.flush({}, { status: 422, statusText: 'Unprocessable Entity' });
+  });
+
+  it('deve tratar erro 503 (Service Unavailable)', (done) => {
+    httpClient.get('/api/test').subscribe({
+      error: (error) => {
+        expect(error.message).toBe('Serviço temporariamente indisponível');
+        done();
+      }
+    });
+
+    const req = httpMock.expectOne('/api/test');
+    req.flush({}, { status: 503, statusText: 'Service Unavailable' });
+  });
 });

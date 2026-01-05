@@ -1,0 +1,179 @@
+[
+  {
+    "id": "prod-001",
+    "name": "Dipirona Sódica 500mg",
+    "description": "Analgésico e antipirético indicado para dor e febre",
+    "category": "ANALGESICS",
+    "manufacturer": "EMS",
+    "activeIngredient": "Dipirona Sódica",
+    "dosage": "500mg",
+    "quantity": 20,
+    "packageType": "blister",
+    "price": 1250,
+    "discount": 10,
+    "stock": 100,
+    "images": [
+      "https://via.placeholder.com/400x400?text=Dipirona+500mg",
+      "https://via.placeholder.com/400x400?text=Dipirona+Verso",
+      "https://via.placeholder.com/400x400?text=Dipirona+Bula"
+    ],
+    "pharmacyId": "pharm-001",
+    "requiresPrescription": false,
+    "sku": "DIP-500-20",
+    "ean": "7891234567890",
+    "ratings": {
+      "average": 4.5,
+      "count": 125
+    }
+  },
+  {
+    "id": "prod-002",
+    "name": "Paracetamol 750mg",
+    "description": "Analgésico e antitérmico de ação rápida",
+    "category": "ANALGESICS",
+    "manufacturer": "Medley",
+    "activeIngredient": "Paracetamol",
+    "dosage": "750mg",
+    "quantity": 10,
+    "packageType": "blister",
+    "price": 890,
+    "discount": 0,
+    "stock": 50,
+    "images": [
+      "https://via.placeholder.com/400x400?text=Paracetamol+750mg"
+    ],
+    "pharmacyId": "pharm-001",
+    "requiresPrescription": false,
+    "sku": "PAR-750-10",
+    "ean": "7891234567891",
+    "ratings": {
+      "average": 4.8,
+      "count": 89
+    }
+  },
+  {
+    "id": "prod-003",
+    "name": "Amoxicilina 500mg",
+    "description": "Antibiótico de amplo espectro",
+    "category": "ANTIBIOTICS",
+    "manufacturer": "Eurofarma",
+    "activeIngredient": "Amoxicilina",
+    "dosage": "500mg",
+    "quantity": 21,
+    "packageType": "blister",
+    "price": 3500,
+    "discount": 15,
+    "stock": 30,
+    "images": [
+      "https://via.placeholder.com/400x400?text=Amoxicilina+500mg"
+    ],
+    "pharmacyId": "pharm-002",
+    "requiresPrescription": true,
+    "sku": "AMO-500-21",
+    "ean": "7891234567892",
+    "ratings": {
+      "average": 4.2,
+      "count": 45
+    }
+  },
+  {
+    "id": "prod-004",
+    "name": "Losartana Potássica 50mg",
+    "description": "Anti-hipertensivo para controle da pressão arterial",
+    "category": "ANTIHYPERTENSIVES",
+    "manufacturer": "Aché",
+    "activeIngredient": "Losartana Potássica",
+    "dosage": "50mg",
+    "quantity": 30,
+    "packageType": "blister",
+    "price": 2800,
+    "discount": 20,
+    "stock": 75,
+    "images": [
+      "https://via.placeholder.com/400x400?text=Losartana+50mg"
+    ],
+    "pharmacyId": "pharm-001",
+    "requiresPrescription": true,
+    "sku": "LOS-50-30",
+    "ean": "7891234567893",
+    "ratings": {
+      "average": 4.6,
+      "count": 210
+    }
+  },
+  {
+    "id": "prod-005",
+    "name": "Metformina 850mg",
+    "description": "Antidiabético oral para controle glicêmico",
+    "category": "ANTIDIABETICS",
+    "manufacturer": "Glenmark",
+    "activeIngredient": "Cloridrato de Metformina",
+    "dosage": "850mg",
+    "quantity": 60,
+    "packageType": "blister",
+    "price": 1890,
+    "discount": 0,
+    "stock": 120,
+    "images": [
+      "https://via.placeholder.com/400x400?text=Metformina+850mg"
+    ],
+    "pharmacyId": "pharm-002",
+    "requiresPrescription": true,
+    "sku": "MET-850-60",
+    "ean": "7891234567894",
+    "ratings": {
+      "average": 4.4,
+      "count": 156
+    }
+  },
+  {
+    "id": "prod-006",
+    "name": "Vitamina C 1g Efervescente",
+    "description": "Suplemento vitamínico para reforço da imunidade",
+    "category": "VITAMINS",
+    "manufacturer": "Bayer",
+    "activeIngredient": "Ácido Ascórbico",
+    "dosage": "1g",
+    "quantity": 10,
+    "packageType": "tube",
+    "price": 2500,
+    "discount": 25,
+    "stock": 200,
+    "images": [
+      "https://via.placeholder.com/400x400?text=Vitamina+C+1g"
+    ],
+    "pharmacyId": "pharm-001",
+    "requiresPrescription": false,
+    "sku": "VIT-C-1G-10",
+    "ean": "7891234567895",
+    "ratings": {
+      "average": 4.7,
+      "count": 342
+    }
+  },
+  {
+    "id": "prod-007",
+    "name": "Produto Fora de Estoque",
+    "description": "Produto temporariamente indisponível",
+    "category": "ANALGESICS",
+    "manufacturer": "Teste",
+    "activeIngredient": "Teste",
+    "dosage": "100mg",
+    "quantity": 10,
+    "packageType": "box",
+    "price": 1000,
+    "discount": 0,
+    "stock": 0,
+    "images": [
+      "https://via.placeholder.com/400x400?text=Out+of+Stock"
+    ],
+    "pharmacyId": "pharm-001",
+    "requiresPrescription": false,
+    "sku": "TEST-100-10",
+    "ean": "7891234567896",
+    "ratings": {
+      "average": 3.5,
+      "count": 12
+    }
+  }
+]

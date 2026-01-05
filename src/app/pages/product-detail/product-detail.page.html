@@ -1,0 +1,231 @@
+<div class="product-detail-container" *ngIf="!isLoading() && product(); else loading">
+  <!-- Back Button -->
+  <button mat-button class="back-button" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    Voltar
+  </button>
+
+  <!-- Product Main Section -->
+  <div class="product-main">
+    <!-- Image Gallery -->
+    <div class="product-gallery">
+      <!-- Main Image -->
+      <div class="main-image">
+        <img [src]="selectedImage()" [alt]="product()?.name" />
+        
+        <!-- Badges -->
+        <div class="badges">
+          <mat-chip *ngIf="product()?.discount" class="discount-badge">
+            -{{ product()?.discount }}%
+          </mat-chip>
+          <mat-chip *ngIf="product()?.requiresPrescription" class="prescription-badge">
+            <mat-icon>medical_services</mat-icon>
+            Receita Obrigatória
+          </mat-chip>
+          <mat-chip *ngIf="!inStock()" class="out-of-stock-badge">
+            Fora de Estoque
+          </mat-chip>
+        </div>
+      </div>
+
+      <!-- Thumbnail Images -->
+      <div class="thumbnails" *ngIf="product()?.images && product()!.images.length > 1">
+        <button
+          *ngFor="let image of product()!.images" 
+          class="thumbnail-button"
+          [class.selected]="selectedImage() === image"
+          (click)="selectImage(image)"
+          [attr.aria-label]="'Selecionar imagem ' + (product()!.images.indexOf(image) + 1)"
+        >
+          <img 
+            [src]="image" 
+            [alt]="product()?.name + ' - Imagem ' + (product()!.images.indexOf(image) + 1)"
+          />
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-info">
+      <!-- Category -->
+      <div class="category">
+        <mat-chip>{{ getCategoryLabel(product()!.category) }}</mat-chip>
+      </div>
+
+      <!-- Name -->
+      <h1 class="product-name">{{ product()?.name }}</h1>
+
+      <!-- Manufacturer -->
+      <p class="manufacturer">Fabricante: {{ product()?.manufacturer }}</p>
+
+      <!-- Rating -->
+      <div class="rating">
+        <div class="stars">
+          <mat-icon *ngFor="let star of getRatingStars()" [class.filled]="star.filled">
+            {{ star.filled ? 'star' : 'star_border' }}
+          </mat-icon>
+        </div>
+        <span class="rating-text">
+          {{ product()?.rating?.toFixed(1) }} ({{ product()?.reviewCount }} avaliações)
+        </span>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- Price -->
+      <div class="price-section">
+        <div class="price-main">
+          <span *ngIf="product()?.discount" class="original-price">
+            {{ formatPrice(product()!.price) }}
+          </span>
+          <span class="current-price">
+            {{ formatPrice(discountedPrice() || product()!.price) }}
+          </span>
+        </div>
+        <div class="price-details">
+          <span *ngIf="product()?.discount" class="savings">
+            Economize {{ formatPrice(product()!.price - (discountedPrice() || product()!.price)) }}
+          </span>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- Stock Info -->
+      <div class="stock-info" [class.low-stock]="product()!.stock < 10">
+        <mat-icon>inventory_2</mat-icon>
+        <span *ngIf="inStock()">
+          {{ product()?.stock }} unidades disponíveis
+        </span>
+        <span *ngIf="!inStock()" class="out-of-stock-text">
+          Produto esgotado
+        </span>
+      </div>
+
+      <!-- Quantity Selector -->
+      <div class="quantity-section" *ngIf="inStock()">
+        <span class="quantity-label">Quantidade:</span>
+        <div class="quantity-controls">
+          <button mat-icon-button (click)="decrementQuantity()" [disabled]="quantity() <= 1" aria-label="Diminuir quantidade">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span class="quantity-value">{{ quantity() }}</span>
+          <button mat-icon-button (click)="incrementQuantity()" [disabled]="quantity() >= product()!.stock" aria-label="Aumentar quantidade">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons" *ngIf="inStock()">
+        <button 
+          mat-raised-button 
+          color="primary" 
+          class="add-to-cart-btn"
+          (click)="addToCart()"
+          [disabled]="!canAddToCart()"
+          aria-label="Adicionar ao carrinho"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+          Adicionar ao Carrinho - {{ formatPrice(totalPrice()) }}
+        </button>
+        <button 
+          mat-raised-button 
+          color="accent" 
+          class="buy-now-btn"
+          (click)="buyNow()"
+          [disabled]="!canAddToCart()"
+          aria-label="Comprar agora"
+        >
+          <mat-icon>flash_on</mat-icon>
+          Comprar Agora
+        </button>
+      </div>
+
+      <div class="out-of-stock-message" *ngIf="!inStock()">
+        <mat-icon>info</mat-icon>
+        <p>Este produto está temporariamente indisponível</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Details Tabs -->
+  <mat-card class="details-section">
+    <mat-tab-group>
+      <!-- Description Tab -->
+      <mat-tab label="Descrição">
+        <div class="tab-content">
+          <h3>Sobre o produto</h3>
+          <p>{{ product()?.description }}</p>
+
+          <h4>Especificações</h4>
+          <mat-expansion-panel *ngIf="product()?.specifications && Object.keys(product()!.specifications).length > 0">
+            <mat-expansion-panel-header>
+              <mat-panel-title>Ver especificações técnicas</mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul>
+              <li *ngFor="let spec of product()!.specifications | keyvalue">
+                <strong>{{ spec.key }}:</strong> {{ spec.value }}
+              </li>
+            </ul>
+          </mat-expansion-panel>
+        </div>
+      </mat-tab>
+
+      <!-- Details Tab -->
+      <mat-tab label="Detalhes">
+        <div class="tab-content">
+          <h3>Informações do Produto</h3>
+          <dl>
+            <dt>SKU:</dt>
+            <dd>{{ product()?.sku }}</dd>
+
+            <dt>Fabricante:</dt>
+            <dd>{{ product()?.manufacturer }}</dd>
+
+            <dt>Categoria:</dt>
+            <dd>{{ getCategoryLabel(product()!.category) }}</dd>
+
+            <dt>Requer Receita:</dt>
+            <dd>{{ product()?.requiresPrescription ? 'Sim' : 'Não' }}</dd>
+
+            <dt>Em Destaque:</dt>
+            <dd>{{ product()?.isFeatured ? 'Sim' : 'Não' }}</dd>
+
+            <dt>Vendas:</dt>
+            <dd>{{ product()?.soldCount }} unidades vendidas</dd>
+          </dl>
+        </div>
+      </mat-tab>
+
+      <!-- Reviews Tab -->
+      <mat-tab label="Avaliações ({{ product()?.reviewCount }})">
+        <div class="tab-content">
+          <h3>Avaliações de Clientes</h3>
+          <p class="coming-soon">Sistema de avaliações em breve...</p>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+  <!-- Related Products -->
+  <section class="related-products" *ngIf="relatedProducts().length > 0">
+    <h2>Produtos Relacionados</h2>
+    <div class="products-grid">
+      <app-product-card
+        *ngFor="let product of relatedProducts()"
+        [product]="product"
+        [viewMode]="'grid'"
+        (productClick)="goToRelatedProduct($event)"
+      ></app-product-card>
+    </div>
+  </section>
+</div>
+
+<!-- Loading State -->
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Carregando produto...</p>
+  </div>
+</ng-template>

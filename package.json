@@ -11,8 +11,12 @@
     "test:ci": "ng test --no-watch --code-coverage --browsers=ChromeHeadless",
     "test:coverage": "ng test --no-watch --code-coverage",
     "lint": "ng lint",
+    "seed:test": "ts-node cypress/support/seed-firestore.ts",
+    "seed:test:verbose": "ts-node --transpile-only cypress/support/seed-firestore.ts",
     "e2e": "cypress open",
-    "e2e:ci": "cypress run"
+    "e2e:ci": "cypress run",
+    "test:e2e": "npm run seed:test && cypress open",
+    "test:e2e:ci": "npm run seed:test && cypress run"
   },
   "prettier": {
     "overrides": [
@@ -26,16 +30,17 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.15",
     "@angular/cdk": "^20.1.0",
-    "@angular/common": "^20.1.0",
-    "@angular/compiler": "^20.1.0",
-    "@angular/core": "^20.1.0",
+    "@angular/common": "^20.3.15",
+    "@angular/compiler": "^20.3.15",
+    "@angular/core": "^20.3.15",
     "@angular/fire": "^20.0.0",
-    "@angular/forms": "^20.1.0",
+    "@angular/forms": "^20.3.15",
     "@angular/material": "^20.1.0",
-    "@angular/platform-browser": "^20.1.0",
-    "@angular/platform-browser-dynamic": "^20.1.0",
-    "@angular/router": "^20.1.0",
+    "@angular/platform-browser": "^20.3.15",
+    "@angular/platform-browser-dynamic": "^20.3.15",
+    "@angular/router": "^20.3.15",
     "firebase": "^11.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -49,7 +54,8 @@
     "@angular-eslint/template-parser": "^20.7.0",
     "@angular/build": "^20.1.4",
     "@angular/cli": "^20.1.4",
-    "@angular/compiler-cli": "^20.1.0",
+    "@angular/compiler-cli": "^20.3.15",
+    "@cypress/webpack-preprocessor": "^7.0.2",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
@@ -61,6 +67,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.8.2"
   }
 }
