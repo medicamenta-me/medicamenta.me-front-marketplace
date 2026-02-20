@@ -10,7 +10,7 @@ export const environment = {
   subdomain: 'marketplace',
   
   // API URL (para IntegrationService)
-  apiUrl: 'http://localhost:5001/medicamenta-me/us-central1/api',
+  apiUrl: 'http://localhost:5001/medicamenta-me/southamerica-east1/api',
   
   // Firebase (COMPARTILHADO com todos os subdomínios)
   firebase: {
@@ -25,7 +25,7 @@ export const environment = {
   
   // API URLs (Backend Functions)
   api: {
-    baseUrl: 'http://localhost:5001/medicamenta-me/us-central1/api',
+    baseUrl: 'http://localhost:5001/medicamenta-me/southamerica-east1/api',
     timeout: 30000
   },
   

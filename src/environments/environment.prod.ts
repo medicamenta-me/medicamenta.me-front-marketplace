@@ -10,7 +10,7 @@ export const environment = {
   subdomain: 'marketplace',
   
   // API URL (para IntegrationService)
-  apiUrl: 'https://us-central1-medicamenta-me.cloudfunctions.net/api',
+  apiUrl: 'https://southamerica-east1-medicamenta-me.cloudfunctions.net/api',
   
   // Firebase (COMPARTILHADO com todos os subdomínios)
   firebase: {
@@ -25,7 +25,7 @@ export const environment = {
   
   // API URLs (Backend Functions)
   api: {
-    baseUrl: 'https://us-central1-medicamenta-me.cloudfunctions.net/api',
+    baseUrl: 'https://southamerica-east1-medicamenta-me.cloudfunctions.net/api',
     timeout: 30000
   },
   
